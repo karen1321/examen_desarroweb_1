@@ -20,4 +20,6 @@ from carros import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^prueba/', views.home),
+    url(r'^list/$', views.car_list.as_view(), name='CarList'),
+    url(r'^detail/(?P<id>\d)/$', views.car_detail.as_view(), name='carDetail'),
 ]
