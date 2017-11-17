@@ -16,10 +16,18 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from carros import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^prueba/', views.home),
     url(r'^list/$', views.car_list.as_view(), name='CarList'),
-    url(r'^detail/(?P<id>\d)/$', views.car_detail.as_view(), name='carDetail'),
-]
+    url(r'^detail/(?P<id>[0-9]+)/$', views.car_detail.as_view(), name='carDetail'),
+    url(r'^detail/(?P<pk>\d)/delete/$',views.CarDeleteView.as_view(), name='carDelete'),
+    url(r'^create$',views.CarCreateView.as_view(), name='carCreate'),
+    url(r'^detail/(?P<pk>\d)/edit/$',views.CarUpdateView.as_view(), name='carUpdate'),
+
+
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

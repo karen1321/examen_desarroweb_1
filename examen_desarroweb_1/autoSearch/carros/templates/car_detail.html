@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{%block search%}
+  {% include "search_form.html" %}<br/>
+{%endblock%}
+{%block content%}
+{% if not request.GET.q %}
+<div class="">
+  {%include "form.html" with form=create_form action_url=create_url btn_title='carro'%}
+  <!-- <p class="image is-32x32">
+    <img src="http://bulma.io/images/placeholders/128x128.png">
+  </p> -->
+</div>
+{% endif %}
+
+{% for object in object_list %}
+<article class="post">
+
+<h1 class="text-center">Detalles del carro </h1>
+ <div class= "btn btn-info">{{object.make}}</div>
+<br>
+<div class= "btn btn-primary">{{object.Type}}</div>
+<br>
+<div class= "btn btn-link">{{object.year}} </div>
+<br>
+<div class= "btn btn-link">{{object.colour}} </div>
+<br>
+<div class= "btn btn-link">{{object.price}} </div>
+<br>
+<div class= "btn btn-link">{{object.created}}</div>
+<br>
+<span class="pull-right has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
+<div class="media">
+
+  <div class="media-left">
+
+    <!-- <p class="image is-32x32">
+      <img src="http://bulma.io/images/placeholders/128x128.png">
+    </p> -->
+  </div>
+
+  <div class="media-content">
+    <div class="content">
+      <p>
+
+        <a href="detail/{{object.id}}/">View</a> {{object.created|timesince}} {{object.user}}&nbsp;
+
+        <!-- <span class="tag">Question</span> -->
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+</article>
+{%empty%}
+{% if request.GET.q %}
+  <p>Carro no encontrado.</p>
+{% else %}
+  <p>Aun no hay carros</p>
+{% endif %}
+{% endfor %}
+{% endblock %}
