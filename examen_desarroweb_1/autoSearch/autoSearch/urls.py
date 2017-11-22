@@ -25,9 +25,9 @@ urlpatterns = [
     url(r'^prueba/', views.home),
     url(r'^list/$', views.car_list.as_view(), name='CarList'),
     url(r'^detail/(?P<id>[0-9]+)/$', views.car_detail.as_view(), name='carDetail'),
-    url(r'^detail/(?P<pk>\d)/delete/$',views.CarDeleteView.as_view(), name='carDelete'),
+    url(r'^detail/(?P<pk>[0-9]+)/delete/$',views.CarDeleteView.as_view(), name='carDelete'),
     url(r'^create$',views.CarCreateView.as_view(), name='carCreate'),
-    url(r'^detail/(?P<pk>\d)/edit/$',views.CarUpdateView.as_view(), name='carUpdate'),
+    url(r'^detail/(?P<pk>[0-9]+)/edit/$',views.CarUpdateView.as_view(), name='carUpdate'),
 
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

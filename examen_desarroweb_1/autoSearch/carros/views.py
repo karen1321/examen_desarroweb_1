@@ -5,7 +5,7 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 
 from django.shortcuts import render
 from .models import Car
-
+from django.db.models import Q
 from .forms import CarModelForm
 from .mixin import FormUserNeededMixin
 from django.urls import reverse_lazy
@@ -19,14 +19,26 @@ def home(request):
 
 
 class car_list(ListView):
-
     template_name = "car_list.html"
-    queryset = Car.objects.all()
 
-    def get_object(self):
-        Type = self.kwargs.get("q")
-        print Type
-        return Car.objects.get(Type=Type)
+    def get_queryset(self,*args,**kwargs):
+        qs = Car.objects.all()
+        print self.request.GET
+        query= self.request.GET.get("q",None)
+        print query
+        if query is not None:
+            qs=qs.filter(
+                        Q(make__icontains=query)
+                        )
+        return qs
+
+    def get_context_data(self,*args, **kwargs):
+        context= super(car_list, self).get_context_data(*args,**kwargs)
+        print context
+        context['create_form']=CarModelForm()
+        context['create_url']=reverse_lazy("carCreate")
+        return context
+
 
 class car_detail(DetailView):
     template_name = "car_detail.html"

@@ -1,26 +1,17 @@
+{% extends "base.html" %}
 
-{% load staticfiles %}
+{%block search%}
+  {% include "search_form.html" %}<br/>
+{%endblock%}
+{%block content%}
+{% if not request.GET.q %}
+<div class="">
+  {%include "form.html" with form=create_form action_url=create_url btn_title='Carro'%}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>  </title>
-<meta name="description" content="{% block description %}{% endblock %}"/>
+</div>
+{% endif %}
 
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-        <link href="{% static '../css/local.min.css' %}" rel="stylesheet">
-
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        </head>
-        <body>
-                <h1 class="text-center"> Carros </h1>
+<h1 class="text-center"> Carros </h1>
 {% for object in object_list %}
 
 <div class= "btn btn-info">{{object.make}}</div>
@@ -36,11 +27,27 @@
 <div class= "btn btn-link">{{object.created}}</div>
 <br>
 
- {% endfor %} 
+ {% endfor %}
 
- <!-- All that javascript -->
-        <script src="../jquery.min.js"></script>
-        <script src="{% static "../js/bootstrap.min.js" %}"></script>
-        </body>
+<span class="pull-right has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
+<div class="media">
 
-</html>
+  <div class="media-left">
+
+  </div>
+
+  <div class="media-content">
+    <div class="content">
+
+    </div>
+  </div>
+
+</div>
+
+</article>
+{% if request.GET.q %}
+  <p>Carro no encontrado</p>
+{% else %}
+  <p>No carros aun</p>
+{% endif %}
+{% endblock %}
